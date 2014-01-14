@@ -241,8 +241,12 @@ PKG_CHECK_MODULES([SAMBAUTIL], [samba-util])
 SAMBA40EXTRA_LIBPATH="-L`$PKG_CONFIG --variable=libdir samba-util`/samba -Wl,-rpath=`$PKG_CONFIG --variable=libdir samba-util`/samba"
 AC_SUBST(SAMBA40EXTRA_LIBPATH)
 AC_CHECK_HEADERS([samba-4.0/wbclient.h],
-                 ,
-                 [AC_MSG_ERROR([samba-4.0/wbclient.h not found])],
+		 ,
+		 [AC_CHECK_HEADERS([samba/wbclient.h],
+				   ,
+		                   [AC_MSG_ERROR([samba/wbclient.h not found])],
+		                   [#include <stdbool.h>
+		                    #include <stdint.h>])],
                  [#include <stdbool.h>
                   #include <stdint.h>])
 AC_CHECK_LIB([wbclient],

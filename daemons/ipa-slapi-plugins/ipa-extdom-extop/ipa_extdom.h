@@ -54,7 +54,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#include <samba-4.0/wbclient.h>
+#ifdef HAVE_SAMBA_4_0_WBCLIENT_H
+#  include <samba-4.0/wbclient.h>
+#else
+#  ifdef HAVE_SAMBA_WBCLIENT_H
+#    include <samba/wbclient.h>
+#  else
+#    error "wbclient.h header from Samba was not found"
+#  endif
+#endif
 
 #include <dirsrv/slapi-plugin.h>
 #include <lber.h>
